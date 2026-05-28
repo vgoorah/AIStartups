@@ -4,7 +4,7 @@ let challengesChartInstance = null;
 // =========================================================================
 // 1. DATA SOURCE: Your Exact Google Sheets Link
 // =========================================================================
-const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/1ScHivp7Aj0gEpFebh56PMsAkjjyoKWJCIIyCXabtEec/pub?output=csv";
+const sheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS71IAf_hZ4iDsev28QieNJO1CKonoBi9uNx-3WCjoY8Q7T_dO24W9TzxDKvRtOp2B8Fq4dXKZYEdBT/pub?output=csv";
 
 // =========================================================================
 // 2. THE CACHE BUSTER & FETCH LOGIC

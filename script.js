@@ -38,13 +38,14 @@ fetch(bypassCacheUrl)
                         const riskKey      = keys.find(k => k.toLowerCase().includes("venture risk"));
                         const challengeKey = keys.find(k => k.toLowerCase().includes("roadblock") || k.toLowerCase().includes("challenge"));
                         const updateKey    = keys.find(k => k.toLowerCase().includes("details") || k.toLowerCase().includes("update"));
-                        
+                        const monthKey     = keys.find(k => k.toLowerCase().includes("month reporting"));
+
                         let startupNameField = nameKey && row[nameKey] ? row[nameKey].trim() : "Unknown Startup"; 
                         let statusField      = statusKey && row[statusKey] ? row[statusKey].trim() : "Stable";
                         let riskField        = riskKey && row[riskKey] ? row[riskKey].trim() : "Low";
                         let challengeField   = challengeKey && row[challengeKey] ? row[challengeKey].trim() : "None Reported";
                         let updateField      = updateKey && row[updateKey] ? row[updateKey].trim() : "No recent updates provided.";
-
+                        let monthField       = monthKey && row[monthKey] ? row[monthKey].trim() : "August 2026";
                         // Normalize for charts
                         let formattedHealth = "Stable";
                         if (statusField.toLowerCase().includes("growth")) formattedHealth = "Growth";
@@ -59,7 +60,8 @@ fetch(bypassCacheUrl)
                             health: formattedHealth,
                             risk: formattedRisk,
                             challenge: challengeField,
-                            update: updateField
+                            update: updateField,
+                            month: monthField
                         };
                     });
 
@@ -67,7 +69,7 @@ fetch(bypassCacheUrl)
 
                 } catch (error) {
                     console.error("Data formatting error:", error);
-                    document.getElementById('startupTableBody').innerHTML = `<tr><td colspan="5" style="text-align: center; color: red; font-weight: bold;">Error formatting data. Check console.</td></tr>`;
+                    document.getElementById('startupTableBody').innerHTML = `<tr><td colspan="6" style="text-align: center; color: red; font-weight: bold;">Error formatting data. Check console.</td></tr>`;
                 }
             }
         });
@@ -75,7 +77,7 @@ fetch(bypassCacheUrl)
     .catch(err => {
         // If it STILL fails, it will print the EXACT reason on your screen
         console.error("Fetch error:", err);
-        document.getElementById('startupTableBody').innerHTML = `<tr><td colspan="5" style="text-align: center; color: red; font-weight: bold;">Connection Failed: ${err.message}</td></tr>`;
+        document.getElementById('startupTableBody').innerHTML = `<tr><td colspan="6" style="text-align: center; color: red; font-weight: bold;">Connection Failed: ${err.message}</td></tr>`;
     });
 
 // =========================================================================
@@ -100,7 +102,7 @@ function buildDashboard(startups) {
         tableBody.innerHTML = ""; 
         
         if (startups.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #64748b;">No responses recorded yet.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #64748b;">No responses recorded yet.</td></tr>`;
         } else {
             startups.forEach(startup => {
                 const healthClass = startup.health === 'Growth' ? 'badge-growth' : 
@@ -113,6 +115,7 @@ function buildDashboard(startups) {
                     <td><span class="badge ${riskClass}">${startup.risk}</span></td>
                     <td style="font-weight: 500;">${startup.challenge}</td>
                     <td style="color: #64748b;">${startup.update}</td>
+                    <td style="font-weight: 500;">${startup.month}</td>
                 </tr>`;
             });
         }
